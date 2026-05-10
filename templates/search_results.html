@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results - Cartify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Cartify</span>
+    </div>
+    <div class="search-bar">
+        <form action="{{ url_for('search') }}" method="get">
+            <input type="text" name="q" placeholder="Search for products, brands, and more..." required>
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    </div>
+    <div class="nav-links">
+        <a href="#"><i class="fa-regular fa-user"></i> Account</a>
+        <a href="#"><i class="fa-solid fa-heart"></i> Wishlist</a>
+        <a href="#"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+    </div>
+</nav>
+
+<!-- SEARCH RESULTS -->
+<section class="products">
+    <h2>Search Results for "{{ query }}"</h2>
+    <div class="product-grid">
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product['image_url'] or 'https://via.placeholder.com/150' }}" alt="{{ product['name'] }}">
+                    <div class="product-info">
+                        <h3>{{ product['name'] }}</h3>
+                        <p>{{ product['description'] }}</p>
+                        <p><strong>${{ '%.2f'|format(product['price']) }}</strong></p>
+                        <div class="product-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <button class="btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No products found for "{{ query }}".</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="about">
+            <h2>About Cartify</h2>
+            <p>Your go-to platform for seamless online shopping. Developed by Amit Chauhan.</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Cartify</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cartify Sales Predictor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/salespredictor.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">🛒 Cartify</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>📊 Sales Predictor</h1>
+    <p>Predict sales using Machine Learning</p>
+</div>
+
+<!-- CARD -->
+<div class="card">
+
+    <input type="number" id="views" placeholder="Enter Views">
+    <input type="number" id="price" placeholder="Enter Price">
+    <input type="number" id="discount" placeholder="Enter Discount %">
+
+    <button onclick="predictSales()">Predict Sales</button>
+
+</div>
+
+<div id="result" class="result"></div>
+
+<script>
+async function predictSales() {
+    let views = document.getElementById("views").value;
+    let price = document.getElementById("price").value;
+    let discount = document.getElementById("discount").value;
+
+    // ✅ Input validation
+    if (!views || !price || !discount) {
+        alert("Please fill all fields!");
+        return;
+    }
+
+    try {
+        let response = await fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                views: views,
+                price: price,
+                discount: discount
+            })
+        });
+
+        let data = await response.json();
+
+        if (data.error) {
+            document.getElementById("result").innerText = "❌ Error: " + data.error;
+        } else {
+            document.getElementById("result").innerText =
+                "🔥 Predicted Sales: " + data.predicted_sales;
+        }
+
+    } catch (error) {
+        console.error(error);
+        document.getElementById("result").innerText =
+            "❌ Failed to connect to server";
+    }
+}
+</script>
+
+</body>
+</html>

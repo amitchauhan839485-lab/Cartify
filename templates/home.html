@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartify - E-commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Cartify</span>
+    </div>
+    <div class="search-bar">
+        <form action="{{ url_for('search') }}" method="get">
+            <input type="text" name="q" placeholder="Search for products, brands, and more..." required>
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    </div>
+    <div class="nav-links">
+        <a href="#"><i class="fa-regular fa-user"></i> Account</a>
+        <a href="#"><i class="fa-solid fa-heart"></i> Wishlist</a>
+        <a href="#"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+         <a href="/sales-predictor">📊 Sales Predictor</a>
+    </div>
+   
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Shop Smart, Live Stylishly</h1>
+        <p>Discover the latest trends and unbeatable deals on Cartify</p>
+        <a href="#products" class="btn-primary">Shop Now</a>
+    </div>
+    <div class="hero-image">
+        <img src="https://images.pexels.com/photos/3945682/pexels-photo-3945682.jpeg" alt="Shopping">
+    </div>
+</section>
+
+<!-- CATEGORY SLIDER -->
+<section class="category-section">
+    <h2>Shop by Category</h2>
+    <div class="product-slider">
+        <div class="slider-track">
+            <div class="slide"><img src="https://images.pexels.com/photos/847371/pexels-photo-847371.jpeg"><p>Shoes</p></div>
+            <div class="slide"><img src="https://media.istockphoto.com/id/1257563298/photo/fashion-clothes-on-a-rack-in-a-light-background-indoors-place-for-text.jpg?s=612x612&w=0&k=20&c=UTL3KlMvLkteLe_9l3QbMklBcyaKQM5j6mcDxxtTr4Y="><p>Clothes</p></div>
+            <div class="slide"><img src="https://media.istockphoto.com/id/1205468032/photo/set-of-contemporary-house-appliances-isolated-on-white.jpg?s=612x612&w=0&k=20&c=K45qBP58iovF3eu7o1-geq7cj9oGN-YQ3rtrO-fcQBQ="><p>Electronics</p></div>
+            <div class="slide"><img src="https://images.pexels.com/photos/280250/pexels-photo-280250.jpeg"><p>Watches</p></div>
+            <div class="slide"><img src="https://images.pexels.com/photos/30639093/pexels-photo-30639093.jpeg"><p>Mobiles</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ADD PRODUCT -->
+<p class="add-product">
+    <a href="{{ url_for('add_product') }}" class="btn-secondary">➕ Add New Product</a>
+</p>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product['image_url'] or 'https://via.placeholder.com/150' }}" alt="{{ product['name'] }}">
+                    <div class="product-info">
+                        <h3>{{ product['name'] }}</h3>
+                        <p>{{ product['description'] }}</p>
+                        <p><strong>${{ '%.2f'|format(product['price']) }}</strong></p>
+                        <div class="product-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <button class="btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No products yet. Add one!</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="about">
+            <h2>About Cartify</h2>
+            <p>Your go-to platform for seamless online shopping. Developed by Amit Chauhan.</p>
+        </div>
+        <div class="newsletter">
+            <h2>Subscribe</h2>
+            <form>
+                <input type="email" placeholder="Enter your email">
+                <button type="submit"><i class="fa-solid fa-envelope"></i></button>
+            </form>
+        </div>
+        <div class="social">
+            <h2>Follow Us</h2>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://wa.me/918394852480?text=Hello%20I%20want%20to%20buy%20a%20product"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/thakur._.amit01?igsh=MWFoZDN5dng0cjJ5ZA%3D%3D&utm_source=qr"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/amit-chauhan-b55856343?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Cartify</p>
+    </div>
+</footer>
+
+<!-- JS SLIDER -->
+<script>
+const sliderTrack = document.querySelector('.slider-track');
+sliderTrack.innerHTML += sliderTrack.innerHTML;
+let scrollAmount = 0;
+let isPaused = false;
+const scrollSpeed = 1;
+function autoScroll() {
+    if (!isPaused) {
+        scrollAmount += scrollSpeed;
+        if (scrollAmount >= sliderTrack.scrollWidth / 2) scrollAmount = 0;
+        sliderTrack.style.transform = `translateX(-${scrollAmount}px)`;
+    }
+    requestAnimationFrame(autoScroll);
+}
+sliderTrack.addEventListener('mouseenter', () => isPaused = true);
+sliderTrack.addEventListener('mouseleave', () => isPaused = false);
+autoScroll();
+</script>
+
+<!-- CHATBOT -->
+<div id="chatbot">
+    <div id="chatbot-button"><i class="fa-solid fa-comments"></i></div>
+    <div id="chatbox">
+        <div class="chat-header">Cartify AI Assistant</div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="bot-msg">👋 Hi! I'm Cartify AI Assistant. How can I help you today?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type a message..."/>
+            <button id="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const chatbotBtn = document.getElementById("chatbot-button");
+    const chatbox = document.getElementById("chatbox");
+    const sendBtn = document.getElementById("send-btn");
+    const userInput = document.getElementById("user-input");
+    const chatMessages = document.getElementById("chat-messages");
+
+    chatbotBtn.onclick = () => {
+        chatbox.style.display = chatbox.style.display === "flex" ? "none" : "flex";
+    };
+
+    function appendMessage(sender, text) {
+        const msg = document.createElement("div");
+        msg.className = sender === "user" ? "user-msg" : "bot-msg";
+        msg.innerText = text;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const text = userInput.value.trim();
+        if (!text) return;
+        appendMessage("user", text);
+        userInput.value = "";
+
+        try {
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: text })
+            });
+            const data = await response.json();
+            appendMessage("bot", data.reply);
+        } catch (error) {
+            appendMessage("bot", "❌ Sorry, AI service is unavailable.");
+            console.error(error);
+        }
+    }
+
+    sendBtn.onclick = sendMessage;
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") sendMessage();
+    });
+});
+</script>
+
+</body>
+</html>

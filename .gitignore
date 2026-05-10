@@ -1,0 +1,42 @@
+# === Python ===
+_pycache_/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+*.egg
+*.egg-info/
+*.log
+
+# === Virtual Environment ===
+venv/
+ENV/
+env/
+.venv/
+
+# === Database Files ===
+*.db
+*.sqlite3
+
+# === IDE & Editor Files ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Flask Specific ===
+instance/
+*.pid
+
+# === Compiled / Build Files ===
+build/
+dist/
+*.spec
+
+# === Others ===
+start.sh

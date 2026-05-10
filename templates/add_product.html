@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | Cartify</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- NAVBAR (same as homepage) -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Cartify</span>
+    </div>
+    <div class="search-bar">
+        <form action="{{ url_for('home') }}" method="get">
+            <input type="text" name="q" placeholder="Search for products, brands, and more..." required>
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    </div>
+    <div class="nav-links">
+        <a href="#"><i class="fa-regular fa-user"></i> Account</a>
+        <a href="#"><i class="fa-solid fa-heart"></i> Wishlist</a>
+        <a href="#"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Add Your Product Easily</h1>
+        <p>Fill in the details below to showcase your product on Cartify</p>
+    </div>
+    <div class="hero-image">
+        <img src="https://images.pexels.com/photos/3945682/pexels-photo-3945682.jpeg" alt="Add Product">
+    </div>
+</section>
+
+<!-- ADD PRODUCT FORM SECTION -->
+<section class="category-section">
+    <h2>Add New Product</h2>
+    <div class="form-container">
+        <form action="{{ url_for('add_product') }}" method="POST" class="product-form">
+            <div class="form-group">
+                <label for="name">Product Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter product name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Enter product details"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price ($)</label>
+                <input type="number" id="price" step="0.01" name="price" placeholder="e.g. 49.99" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image_url">Image URL</label>
+                <input type="text" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">
+            </div>
+
+            <button type="submit" class="btn-primary">Add Product</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER (same as homepage) -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="about">
+            <h2>About Cartify</h2>
+            <p>Your go-to platform for seamless online shopping. Developed by Amit Chauhan.</p>
+        </div>
+        <div class="newsletter">
+            <h2>Subscribe</h2>
+            <form>
+                <input type="email" placeholder="Enter your email">
+                <button type="submit"><i class="fa-solid fa-envelope"></i></button>
+            </form>
+        </div>
+        <div class="social">
+            <h2>Follow Us</h2>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Cartify</p>
+    </div>
+</footer>
+
+</body>
+</html>
