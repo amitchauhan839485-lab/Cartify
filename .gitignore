@@ -40,3 +40,4 @@ dist/
 
 # === Others ===
 start.sh
+.env
